@@ -1,0 +1,36 @@
+make it so the slider value is obtained via a DOM query. sent from client side when user moves slider
+
+
+v20.15.1
+
+
+homepage
+    |
+    loginpgage-paidApp.
+    freeAppPage
+              |
+              loginpgage
+                       |
+                       paidApp.
+
+
+loginPage needs to include, login form, and payment btn.
+
+1st login form, 
+2end payment
+BUT the paymeny needs to be complete befor login for submit btn is clicked
+
+
+add to ai response
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+
+    on register page change submit btn to link to login page
+
+
+stripe key 
+fgms-iged-aqva-rsux-osam
+    
