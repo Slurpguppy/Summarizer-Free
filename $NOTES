@@ -34,3 +34,26 @@ add to ai response
 stripe key 
 fgms-iged-aqva-rsux-osam
     
+
+
+GITHUB TEST
+
+
+//Stage Your Changes: Add the modified files to the staging area: 
+
+git add .
+
+//Commit with a Message: Save your changes with a descriptive commit message:
+
+git commit -m "Describe your changes here"
+
+//Push Your Changes: Update your GitHub repository with the changes
+
+git push origin master
+
+
+-UPLOAD TO GIT-
+
+git add .
+git commit -m "Describe your changes here"
+git push origin master
