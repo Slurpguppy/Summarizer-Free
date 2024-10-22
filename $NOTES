@@ -3,6 +3,11 @@ make it so the slider value is obtained via a DOM query. sent from client side w
 
 v20.15.1
 
+// response sizes
+//Your responses must fit within 20 and 50 tokens.
+//Your responses must fit within 100 and 150 tokens.
+//Your responses must fit within 175 and 225 tokens.
+
 
 homepage
     |
@@ -33,7 +38,8 @@ add to ai response
 
 stripe key 
 fgms-iged-aqva-rsux-osam
-    
+groq key
+GROQ_API_KEY=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
 
 
 GITHUB TEST
@@ -51,9 +57,13 @@ git commit -m "Describe your changes here"
 
 git push origin master
 
+CONNECT TO REPO
+
+git clone https://github.com/Slurpguppy/Summarizer.git
+cd Summarizer
 
 -UPLOAD TO GIT-
 
 git add .
 git commit -m "Describe your changes here"
-git push origin master
+git push origin main

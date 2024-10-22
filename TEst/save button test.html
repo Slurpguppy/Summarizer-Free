@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Saver</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1></h1>
+        <input type="text" id="save-this-text" placeholder="Enter your text here">
+        <button id="save-btn">Save Text</button>
+        <div class="sidebar" id="save">
+            <h2></h2>
+            <ul id="saved-text-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('save-btn').addEventListener('click', function() {
+            // Get the text input value
+            const inputText = document.getElementById('save-this-text').value.trim();
+            
+            // Check if there is any input text
+            if (inputText) {
+                // Create a new list item
+                const listItem = document.createElement('li');
+                listItem.textContent = inputText;
+                
+                // Append the list item to the sidebar list
+                document.getElementById('saved-text-list').appendChild(listItem);
+                
+                // Clear the input field
+                document.getElementById('save-this-text').value = '';
+            } else {
+                alert('Please enter some text to save!');
+            }
+        });
+    </script>
+</body>
+</html>

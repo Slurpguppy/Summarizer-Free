@@ -22,14 +22,14 @@
     <button class="close-button" onclick="closeSidebar()">Close</button>
     <div class="container">
       
-      <div class="log">
+      <div id="save" class="log">
           <h2>History:</h2>
           <select id="sortOptions">
               <option value="default">Sort By</option>
               <option value="Alphabetical">Alphabetical</option>
               <option value="chronological">Recent</option>
           </select>
-          <ul id="logList"></ul>
+          <ul id="saved-text-list"></ul>
           <button id="clearLogsButton">Delete saved articles</button>
           <a href="http://localhost:3000/">
             <button>Logout</button>
@@ -49,13 +49,13 @@
   </div>
 </div>
 <div class="options-bar">
-  <button class="option-btn" id="copyButton"><object type="image/svg+xml" data="imgs\download-solid.svg" width="20" height="20"></object></button>
+  <button class="option-btn" id="save-btn"><object type="image/svg+xml" data="imgs\download-solid.svg" width="20" height="20"></object></button>
   <button class="option-btn" onclick="speakText()"><object type="image/svg+xml" data="imgs/play-solid.svg" width="20" height="20"></object></button>
   <button class="option-btn" onclick="copyToClipboard()"><object type="image/svg+xml" data="imgs/copy-solid.svg" width="20" height="20"></object></button>
   <button class="option-btn" onclick="repeatLastMessage()"><object type="image/svg+xml" data="imgs/repeat-solid.svg" width="20" height="20"></object></button>
 </div>
 <div class="slider-container">
-  <input type="range" min="1" max="3" value="2" class="slider" id="mySlider" step="1">
+  <input type="range" min="1" max="3" value="2" class="slider" id="mySlider" step="1" oninput="updateSliderValue()">
   <p>Summary length: <span id="sliderValue">Medium</span></p>
   <p>Tokens-alowed: <span id="sliderPosition">two</span></p>
 </div>
@@ -72,6 +72,7 @@
   
   <script>
     let lastMessage = ""; // Variable to store the last message sent by the user
+    let sliderValue = 2; // Initialize the slider value
 
     async function sendMessage() {
   const input = document.getElementById("user-input");
@@ -99,7 +100,11 @@
     const data = await response.json();
 
     // Add AI's response to chat log
-    chatLog.innerHTML += `<div class="message ai-message" id="textToRead"> <span class="ai-text">Summarized</span>: ${data.response}</div>`;
+    chatLog.innerHTML += `
+  <div class="message ai-message" id="textToRead">
+    <span class="ai-text">Summarized</span>: ${data.response.replace(/\n/g, '<br>')}
+  </div>
+`;
     chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
 
     
@@ -182,6 +187,26 @@ function copyToClipboard() {
     
   }
 }
+
+document.getElementById('save-btn').addEventListener('click', function() {
+            // Get the text input value
+            const inputText = document.getElementById('save-this-text').value.trim();
+            
+            // Check if there is any input text
+            if (inputText) {
+                // Create a new list item
+                const listItem = document.createElement('li');
+                listItem.textContent = inputText;
+                
+                // Append the list item to the sidebar list
+                document.getElementById('saved-text-list').appendChild(listItem);
+                
+                // Clear the input field
+                document.getElementById('save-this-text').value = '';
+            } else {
+                alert('Please enter some text to save!');
+            }
+        });
 
 //side-bar btn
 
