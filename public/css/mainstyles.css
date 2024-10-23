@@ -70,7 +70,7 @@ body {
     .about {
       position: absolute;
     top: 40px; /* Move down 50% of the viewport height */
-    left: 50%; /* Move right 50% of the viewport width */
+    left: 24%; /* Move right 50% of the viewport width */
     transform: translate(-50%, -50%); /* Shift back by 50% of the element's size to perfectly center it */
     font-size: large;
     color: #fff;
