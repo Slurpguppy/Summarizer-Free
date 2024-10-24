@@ -19,11 +19,14 @@
 </head>
 <body>
   <div class="side-bar">
+    
     <button class="close-button" onclick="closeSidebar()">Close</button>
     <div class="container">
       
       <div id="save" class="log">
-          <h2>History:</h2>
+        
+        <div class="about text-dark-mode"><object class="paper-logo" type="image/svg+xml" data="imgs/newspaper-regular.svg" width="20" height="20">Summarizer</object></i><span style="color: #252525;">Summarizer</span></div>
+          <!--<h2>History:</h2>-->
           <select id="sortOptions">
               <option value="default">Sort By</option>
               <option value="Alphabetical">Alphabetical</option>
@@ -40,10 +43,7 @@
   <div class="header header-dark" id="header">
   <div class="logo">
     <button class="open-button" onclick="togglePopup()">Open Menu</button>
-  <object type="image/svg+xml" data="imgs/newspaper-regular.svg" width="20" height="20">
-    Your browser does not support SVG
   </object>
-  
   
  </button>
   </div>
@@ -67,7 +67,7 @@
   </div>
   <div class="footer">Created by <span style="color: #216d21;">Will Ratkowski</span>, powered by Groq AI.</div>
 </div>
-  <div class="about text-dark-mode"></i><span style="color: #007BFF;">Summarizer</span></div>
+  
   <button class="theme-tog" onclick="myFunction()" width="20" height="20"></button>
   
   <script>
