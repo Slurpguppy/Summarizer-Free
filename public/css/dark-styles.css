@@ -115,7 +115,7 @@ body {
     }
     .link-text {
     font-weight: bold; /* Optional: make it bold */
-    color: #000000; /* Optional: change the text color */
+    color: #007BFF; /* Optional: change the text color */
     }
     .ai-text{
     font-weight: bold; /* Optional: make it bold */
@@ -128,13 +128,13 @@ body {
       position: relative;
     }
     .user-message {
-      background-color: #5c5c5c;
-      color: #333;
+      background-color: #2c2c2c;
+      color: #afafaf;
       align-self: flex-end;
     }
     .ai-message {
-      background-color: #ffffff;
-      color: #333;
+      background-color: #2c2c2c;
+      color: #ffffff;
       font-size: 22px;
       align-self: flex-start;
       display: flex;
@@ -155,7 +155,7 @@ body {
       color: #ffffff;
   }
     #user-input:hover {
-      background-color: #eeeeee;
+      background-color: #0e0e0e;
     }
     .user-input {
       flex: 1;
@@ -229,7 +229,7 @@ body {
     }
 
     .option-btn:hover {
-    background-color: #e3e3e3cb;
+    background-color: #242424;
     }
     
     .footer {
@@ -246,7 +246,7 @@ body {
       background-color: #2c2c2c;
     }
     .text-dark-mode {
-      color: #4f4f4f;
+      color: #ffffff;
     }
     .dark-mode {
     background-color: rgb(32, 32, 32);
@@ -483,12 +483,12 @@ li {
   padding: 50px;
   width: 250px;
   height: 100%;
-  background: rgb(244, 244, 244);;
+  background: #2c2c2c;
   border: 1px solid #7474742c;
   border-radius: 10px;
   font-size: 16px;  /* Adjust font size */
   line-height: 1.6;  /* Spacing between lines for readability */
-  color: #333;  /* Dark color for the text */
+  color: #ffffff;  /* Dark color for the text */
   padding: 10px;
 }
 
