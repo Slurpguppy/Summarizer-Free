@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Hover Lock Example</title>
+    <title></title>
     <style>
         .btn-1 {
     position: relative;
@@ -15,18 +15,6 @@
     border: none; /* No border */
     border-radius: 5px; /* Rounded corners */
     padding: 100px 150px; /* Vertical and horizontal padding */
-    transition: background-color 0.3s; /* Smooth background color change */
-}
-
-.btn-2 {
-    position: relative;
-    padding-left: 30px; /* Space for the icon */
-    cursor: pointer; /* Pointer cursor */
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 50px 100px; /* Vertical and horizontal padding */
     transition: background-color 0.3s; /* Smooth background color change */
 }
 
@@ -58,9 +46,7 @@
     background-color: #4CAF50;
 }
 
-.locked-button::after {
-    content: 'Enter'; /* Default text */
-}
+
 
     </style>
 </head>
@@ -70,24 +56,17 @@
         <i class="fas fa-lock" style="display: none;"></i>
     </button>
 
-    <button class="locked-button btn-2" data-link="subscribe.html">
-        <i class="fas fa-lock" style="display: none;"></i>
-    </button>
-
-    <button class="locked-button btn-2" data-link="subscribe.html"><i class="fas fa-lock" style="display: none;"></i></button>
-    
-
     <script>
-        // Select all buttons with the class 'locked-button'
-        const buttons = document.querySelectorAll('.locked-button');
+         // Select all buttons with the class 'locked-button'
+ const buttons = document.querySelectorAll('.locked-button');
 
-        // Attach click event listener to each button
-        buttons.forEach(button => {
-            button.addEventListener('click', function() {
-                const link = this.getAttribute('data-link');
-                window.location.href = link; // Redirect to the subscription page
-            });
-        });
+// Attach click event listener to each button
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        const link = this.getAttribute('data-link');
+        window.location.href = link; // Redirect to the subscription page
+    });
+});
     </script>
 
 

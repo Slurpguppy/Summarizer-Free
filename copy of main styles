@@ -1,7 +1,7 @@
 body {
   display: flex;
   flex-direction: column;
-  height: 95vh;
+  height: 100vh;
   font-family: Ubuntu, sans-serif;
   background-color: #f0f0f0;
   margin: 0;
@@ -13,7 +13,7 @@ body {
   width: 300px;
   background-color: #ffffff;
   border-right: 1px solid #7474742c;
-  color: #fff;
+  color: #3a3a3a;
   padding: 10px;
   position: fixed;
   top: 0;
@@ -54,34 +54,22 @@ body {
 
     .paper-logo {
       position: relative;
-    top: 34px; /* Move down 50% of the viewport height */
-    left: 8%; /* Move right 50% of the viewport width */
+      height: 100%;
     transform: translate(-50%, -50%); /* Shift back by 50% of the element's size to perfectly center it */
     font-size: large;
     color: #fff;
     text-align: center;
     padding: 10px;
-    }
+    } 
 
     .theme-tog{
-      padding: 10px;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 16px;
-      position: absolute;
-      top: 30px;
-      right: 25px;
-      background-image: url('imgs/sun-regular.svg');
-      background-repeat: no-repeat;
-      background-color: #ffffff;
+      
     }
 
     .about {
       position: relative;
     top: 0px; /* Move down 50% of the viewport height */
-    left: 24%; /* Move right 50% of the viewport width */
+    left: 43%; /* Move right 50% of the viewport width */
     transform: translate(-50%, -50%); /* Shift back by 50% of the element's size to perfectly center it */
     font-size: large;
     color: #fff;
@@ -95,7 +83,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 90%;
-  max-width: 600px;
+  max-width: 1900px;
   height: 80vh;
   margin: auto;
   background-color: #343434;
@@ -134,15 +122,19 @@ body {
     .ai-message {
       background-color: #ffffff;
       color: #333;
-      font-size: larger;
+      font-size: 22px;
       align-self: flex-start;
+      display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
     }
     .input-container {
       display: flex;
-      
+      justify-content: space-between;
       padding: 10px;
+
       background-color: #4f4f4f;
-      
     }
     .input-container-dark {
   background: #f0f0f0;
@@ -160,6 +152,7 @@ body {
       margin-right: 10px;
       font-size: 16px;
       background-color: #4f4f4f;
+      width: 50px;
     }
 
     .user-input-dark {
@@ -176,6 +169,18 @@ body {
       cursor: pointer;
       font-size: 16px;
     }
+
+    .paste-btn {
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
     button:hover {
       background-color: #0056b3;
     }
@@ -185,30 +190,32 @@ body {
     display: flex;
     justify-content: space-between;
     width: 90%;
-    max-width: 600px;
+    max-width: 1900px;
     margin: auto;
-    
+    margin-top: 15px;
     overflow: hidden;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
     }
 
     .option-btn {
       padding: 10px 15px;
-      background-color: #f0f0f0;
+      background-color: #ffffff;
       color: #333;
       cursor: pointer;
       font-size: 16px;
+      font-weight:500;
       width: 100%;
-      
-      border-radius: 5px;
-      margin: 10px;
-      border: 1px solid #ddd;
+      height: 60px;
+      border: none;
+      white-space: nowrap;
+      border-left: 1px solid #ddd;
     }
 
     .option-btn:hover {
-    background-color: #cdcdcd;
+    background-color: #e3e3e3cb;
     }
     
     .footer {
@@ -251,7 +258,15 @@ body {
     }
   
     .open-button {
-      background-color: red;
+      background-color: #f0f0f0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 40px;
+      height: 40px;
+      margin: 12px 12px -4px 12px;
     }
   }
 
@@ -264,23 +279,64 @@ body {
 
   }
 
+
   
-  .close-button {
-    display: block;
-    background-color: #f44336; /* Red background */
+  
+  /* header side bar */
+
+ 
+
+  /* Side Bar Header styling */
+  .side-bar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    background-color: #ffffff;
+    color: white;
+  }
+
+  .side-bar-header button {
+    padding: 0px;
+    background-color: #ffffff;
     color: white;
     border: none;
-    padding: 10px;
     cursor: pointer;
-    position: absolute; /* Position it in the top right of the sidebar */
-    top: 10px;
-    right: 10px;
-    z-index: 100;
+    border-radius: 5px;
+    font-size: 14px;
   }
-  
-  .close-button:hover {
-    background-color: #d32f2f; /* Darker red on hover */
+
+  .theme-tog {
+    margin: 20px;
+    background-color: #ffffff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 24px;
+    width: 35px;
+    height: 40px;
+    align-items: center;   /* Vertically centers the icon */
+    justify-content: center; /* Horizontally centers the icon */
+    display: flex;
   }
-  
-  
+
+  /* Center button styling */
+  .center-button {
+    flex: 1;
     
+    background-color: #ffffff;
+    color: #252525;
+    text-align: center;
+    font-size: 22px;
+    font-weight: light;
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Adjust space between icon and text if needed */
+  }
+
+  .saved-art {
+    font-weight: 700;
+    font-size: larger;
+    color: #000000;
+  }

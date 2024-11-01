@@ -2372,6 +2372,7 @@ input, select, textarea {
 		.image img {
 			border-radius: 8px;
 			display: block;
+			width: 50px;
 		}
 
 		.image.left, .image.right {
@@ -3783,3 +3784,32 @@ input, select, textarea {
 			}
 
 		}
+
+		.screenshot {
+			height: 20px;
+		}
+
+		.image img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover; /* Ensures the image covers the entire span without distortion */
+		}
+
+		.will-main {
+			display: flex;
+    	justify-content: center; /* Centers horizontally */
+    	align-items: center; /* Centers vertically */
+    	margin: 0;
+		}
+
+		.image-w {
+			text-align: center;
+			
+		}
+
+		.image-w img {
+			display: block;
+			margin: 0 auto;
+			margin-top: 70px;
+		  }
+		  

@@ -11,7 +11,7 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8986512893450250"
      crossorigin="anonymous"></script>
      <link rel="stylesheet" href="css/sliderstyles.css"> <!-- Slider css -->
-     <link rel="stylesheet" href="css/mainstyles.css"> <!-- Main css -->
+     <link id="theme-stylesheet" rel="stylesheet" href="css/dark-styles.css"> <!-- Main css -->
      <link rel="stylesheet" href="css/copystyles.css"> <!-- Side-bar css -->
   <style>
 
@@ -19,56 +19,69 @@
 </head>
 <body>
   <div class="side-bar">
-    
-    <button class="close-button" onclick="closeSidebar()">Close</button>
+
+    <div class="side-bar-header">
+     
+    <div class="center-button">
+      <img src="imgs/newspaper-regular.svg" alt="Icon" width="30" height="30">
+      <span></span>
+  </div>
+  <button onclick="closeSidebar()">
+    <img src="imgs/xmark-solid.svg" alt="Close" width="30" height="30">
+</button>
+</div>
+<!--
+    <div class="side-bar-header">
+    <button class="close-button" onclick="closeSidebar()"><object type="image/svg+xml" data="imgs/xmark-solid.svg" width="30" height="30"></object>
+    </button>
+    <div class="about text-dark-mode"><object class="paper-logo" type="image/svg+xml" data="imgs/newspaper-regular.svg" width="20" height="20">Summarizer</object></i><span class="paper-logo-text style="color: #252525;">Summarizer</span></div>
+  </div>
+-->
     <div class="container">
-      
       <div id="save" class="log">
-        
-        <div class="about text-dark-mode"><object class="paper-logo" type="image/svg+xml" data="imgs/newspaper-regular.svg" width="20" height="20">Summarizer</object></i><span style="color: #252525;">Summarizer</span></div>
-          <!--<h2>History:</h2>-->
-          <select id="sortOptions">
+        <h2 class="History saved-art"></h2>
+          <select class="sort-btn" id="sortOptions">
               <option value="default">Sort By</option>
               <option value="Alphabetical">Alphabetical</option>
               <option value="chronological">Recent</option>
           </select>
-          <ul id="saved-text-list"></ul>
-          <button id="clearLogsButton">Delete saved articles</button>
+          <ul class="saved-text-list"></ul>
+          <button class="side-bar-btns" id="clearLogsButton">Delete saved articles</button>
           <a href="http://localhost:3000/">
-            <button>Logout</button>
+            <button class="side-bar-btns">Logout</button>
         </a>
       </div>
   </div>
   </div>
-  <div class="header header-dark" id="header">
-  <div class="logo">
-    <button class="open-button" onclick="togglePopup()">Open Menu</button>
-  </object>
+ <!--<div class="header header-dark" id="header">
+  <div class="logo">--> 
+    <button class="open-button" onclick="togglePopup()"> <img src="imgs/bars-solid.svg" alt="Icon" width="30" height="30">
   
  </button>
   </div>
 </div>
 <div class="options-bar">
-  <button class="option-btn" id="save-btn"><object type="image/svg+xml" data="imgs\download-solid.svg" width="20" height="20"></object></button>
-  <button class="option-btn" onclick="speakText()"><object type="image/svg+xml" data="imgs/play-solid.svg" width="20" height="20"></object></button>
-  <button class="option-btn" onclick="copyToClipboard()"><object type="image/svg+xml" data="imgs/copy-solid.svg" width="20" height="20"></object></button>
-  <button class="option-btn" onclick="repeatLastMessage()"><object type="image/svg+xml" data="imgs/repeat-solid.svg" width="20" height="20"></object></button>
+  <button id="Save-alert" class="option-btn save-btn"><object type="image/svg+xml" data="imgs\download-solid.svg" width="20" height="20"></object><br>Save</button>
+  <button id="Speak-alert" class="option-btn" onclick="speakText()"><object type="image/svg+xml" data="imgs/play-solid.svg" width="20" height="20"></object><br>Speak</button>
+  <button id="Copy-alert" class="option-btn" onclick="copyToClipboard()"><object type="image/svg+xml" data="imgs/copy-solid.svg" width="20" height="20"></object><br>Copy</button>
+  <button id="Redo-alert" class="option-btn" onclick="repeatLastMessage()"><object type="image/svg+xml" data="imgs/repeat-solid.svg" width="20" height="20"></object><br>Rewrite</button>
 </div>
 <div class="slider-container">
   <input type="range" min="1" max="3" value="2" class="slider" id="mySlider" step="1" oninput="updateSliderValue()">
-  <p>Summary length: <span id="sliderValue">Medium</span></p>
-  <p>Tokens-alowed: <span id="sliderPosition">two</span></p>
+  <p style="margin: 10px; margin-top: 16px; white-space: nowrap; color: white;">Summary length: <span id="sliderValue">Medium</span></p>
 </div>
 <div class="chat-container chat-dark-mode">
+  <div onclick="switchStyles()" class="theme-tog">
+    
+  </div>
   <div class="chat-log" id="chat-log"></div>
   <div class="input-container input-container-dark" id="input-container">
-    <input type="text" class="user-input user-input-dark" id="user-input" placeholder="Enter URL..." />
+    <input type="text" class="user-input user-input-dark" id="user-input" placeholder="Enter URL, or text..." />
+    <button class="paste-btn" onclick="pasteClipboard()">Paste</button>
     <button class="send-btn" onclick="sendMessage()">Summarize</button>
   </div>
   <div class="footer">Created by <span style="color: #216d21;">Will Ratkowski</span>, powered by Groq AI.</div>
 </div>
-  
-  <button class="theme-tog" onclick="myFunction()" width="20" height="20"></button>
   
   <script>
     let lastMessage = ""; // Variable to store the last message sent by the user
@@ -101,8 +114,8 @@
 
     // Add AI's response to chat log
     chatLog.innerHTML += `
-  <div class="message ai-message" id="textToRead">
-    <span class="ai-text">Summarized</span>: ${data.response.replace(/\n/g, '<br>')}
+  <div class="text-input message ai-message" id="textToRead">
+    <span class="ai-text">Summarized:</span><br> ${data.response.replace(/\n/g, '<br>')}
   </div>
 `;
     chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
@@ -124,32 +137,8 @@ function repeatLastMessage() {
   if (lastMessage) {
     document.getElementById("user-input").value = lastMessage; // Set the input value to the last message
     sendMessage(); // Call sendMessage to send the last message
-  } else {
-    alert("No message to repeat.");
-  }
+  } 
 }
-
-
-// theme toggle
-function myFunction() {
-    var bodyElement = document.body;
-    var chatContainer = document.querySelector('.chat-container');
-    const about = document.querySelector(".about");
-    const header = document.getElementById("header");
-    const inputContainer = document.getElementById("input-container");
-    const userInput = document.getElementById("user-input");
-
-    // Toggle dark mode class on body
-    bodyElement.classList.toggle("dark-mode");
-    header.classList.toggle("header-dark");
-    
-    // Toggle chat dark mode class on chat container
-    chatContainer.classList.toggle("chat-dark-mode");
-    inputContainer.classList.toggle("input-container-dark");
-    userInput.classList.toggle("user-input-dark")
-
-    about.classList.toggle("text-dark-mode");
-  }
 
   function speakText() {
   const textElement = document.getElementById("textToRead");
@@ -162,12 +151,8 @@ function myFunction() {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       speechSynthesis.speak(utterance);
-    } else {
-      alert("Sorry, your browser doesn't support text-to-speech.");
-    }
-  } else {
-    alert("No text found to read aloud.");
-  }
+    } 
+  } 
 }
 // Add this function to your existing script
 function copyToClipboard() {
@@ -188,25 +173,24 @@ function copyToClipboard() {
   }
 }
 
-document.getElementById('save-btn').addEventListener('click', function() {
-            // Get the text input value
-            const inputText = document.getElementById('save-this-text').value.trim();
-            
-            // Check if there is any input text
-            if (inputText) {
-                // Create a new list item
-                const listItem = document.createElement('li');
-                listItem.textContent = inputText;
-                
-                // Append the list item to the sidebar list
-                document.getElementById('saved-text-list').appendChild(listItem);
-                
-                // Clear the input field
-                document.getElementById('save-this-text').value = '';
-            } else {
-                alert('Please enter some text to save!');
-            }
-        });
+document.querySelector('.save-btn').addEventListener('click', function() {
+  // Get the AI response text
+  const aiResponseElement = document.querySelector('#textToRead');
+  
+  if (aiResponseElement) {
+    const inputText = aiResponseElement.textContent.trim();
+    
+    // Check if there's any text to save
+    if (inputText) {
+      // Create a new list item
+      const listItem = document.createElement('li');
+      listItem.textContent = inputText;
+      
+      // Append the list item to the sidebar list
+      document.querySelector('.saved-text-list').appendChild(listItem);
+    } 
+  } 
+});
 
 //side-bar btn
 
@@ -219,11 +203,31 @@ function closeSidebar() {
   const sidebar = document.querySelector('.side-bar');
   sidebar.style.display = 'none';
 }
+
+async function pasteClipboard() {
+        try {
+            // Use the Clipboard API to read the clipboard text
+            const text = await navigator.clipboard.readText();
+            // Set the input value to the pasted text
+            document.getElementById('user-input').value = text;
+        } catch (err) {
+            console.error('Failed to read clipboard contents: ', err);
+        }
+    }
+
+    function switchStyles() {
+    const themeStylesheet = document.getElementById('theme-stylesheet');
+    // Toggle between dark and light stylesheets based on current href
+    themeStylesheet.href = themeStylesheet.href.includes('dark-styles.css') ? 'css/light-styles.css' : 'css/dark-styles.css';
+
+}
+
   </script>
 
 <script src="js/sliderscript.js"></script> <!-- Slider JS -->
 <script src="js/copyscript.js"></script> <!-- Copy JS -->
 <script src="js/loginScript.js"></script> <!-- Login JS -->
+<script src="js/alerts.js"></script> <!-- Alerts JS -->
 
 </body>
 </html>

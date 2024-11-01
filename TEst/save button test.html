@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Saver</title>
     <style>
-       
+        /* Add your styles here */
     </style>
 </head>
 <body>
     <div class="container">
-        <h1></h1>
-        <input type="text" id="save-this-text" placeholder="Enter your text here">
-        <button id="save-btn">Save Text</button>
-        <div class="sidebar" id="save">
-            <h2></h2>
-            <ul id="saved-text-list"></ul>
+        <input type="text" class="text-input" placeholder="Enter your text here">
+        <button class="save-btn">Save Text</button>
+        <div class="sidebar">
+            <ul class="saved-text-list"></ul>
         </div>
     </div>
 
     <script>
-        document.getElementById('save-btn').addEventListener('click', function() {
+        document.querySelector('.save-btn').addEventListener('click', function() {
             // Get the text input value
-            const inputText = document.getElementById('save-this-text').value.trim();
+            const inputText = document.querySelector('.text-input').value.trim();
             
             // Check if there is any input text
             if (inputText) {
@@ -31,10 +29,10 @@
                 listItem.textContent = inputText;
                 
                 // Append the list item to the sidebar list
-                document.getElementById('saved-text-list').appendChild(listItem);
+                document.querySelector('.saved-text-list').appendChild(listItem);
                 
                 // Clear the input field
-                document.getElementById('save-this-text').value = '';
+                document.querySelector('.text-input').value = '';
             } else {
                 alert('Please enter some text to save!');
             }
