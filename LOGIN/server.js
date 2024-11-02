@@ -13,6 +13,11 @@ const JWT_SECRET = 'your_jwt_secret'; // Use a strong secret in production
 // Serve static files from the "public" directory
 app.use(express.static('public'));
 
+// Route for the root URL
+app.get("/", (req, res) => {
+    res.send("Hello, world! Your server is running.");
+  });
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -91,6 +96,6 @@ app.post('/login', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
-  
+  console.log(`Server running on port ${port}`);
+});
+
