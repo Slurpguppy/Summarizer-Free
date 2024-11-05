@@ -222,6 +222,52 @@ async function pasteClipboard() {
 
 }
 
+document.querySelector('.save-btn').addEventListener('click', function() {
+  // Get the AI response text
+  const aiResponseElement = document.querySelector('#textToRead');
+
+  if (aiResponseElement) {
+    const inputText = aiResponseElement.textContent.trim();
+
+    // Check if there's any text to save
+    if (inputText) {
+      // Save the article in local storage
+      const savedArticles = JSON.parse(localStorage.getItem('savedArticles')) || [];
+      savedArticles.push(inputText);
+      localStorage.setItem('savedArticles', JSON.stringify(savedArticles));
+
+      // Display the saved article in the list
+      displaySavedArticles();
+    }
+  }
+});
+
+function displaySavedArticles() {
+  const savedArticles = JSON.parse(localStorage.getItem('savedArticles')) || [];
+  const savedList = document.querySelector('.saved-text-list');
+  
+  // Clear the current list
+  savedList.innerHTML = '';
+  
+  // Create a list item for each saved article
+  savedArticles.forEach(article => {
+    const listItem = document.createElement('li');
+    listItem.textContent = article;
+    savedList.appendChild(listItem);
+  });
+}
+
+// Call displaySavedArticles on page load
+window.addEventListener('load', displaySavedArticles);
+
+document.getElementById('clearLogsButton').addEventListener('click', function() {
+  localStorage.removeItem('savedArticles');
+  displaySavedArticles(); // Clear the list on the page
+});
+
+
+
+
   </script>
 
 <script src="js/sliderscript.js"></script> <!-- Slider JS -->
