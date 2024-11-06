@@ -5,18 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <style>
-        #content {
-            display: none; /* Hide content initially */
-        }
-        #mainContent {
-            display: block; /* Show main content initially */
-        }
-        #login-form {
-            display: block; /* Show the login form initially */
-        }
-        #mainContent.hidden {
-            display: none; /* Hide main content after login */
-        }
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4; /* Light background */
@@ -106,10 +95,47 @@
             padding: 10px;
             border-bottom: 1px solid #ccc;
         }
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        /* Overlay behind the popup */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* New close button for the popup */
+        #closePopup {
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
-    <div id="mainContent">
+    <div id="popup">
         <h1>blacccccc</h1>
         <!--<button id="aboutBtn">About</button>-->
         <form id="register-form">
@@ -123,55 +149,58 @@
             <button id="aboutBtn" type="submit">Login</button>
         </form>
     </div>
+    <div id="overlay"></div>
+    <div id="mainContent">
+        <!--<button id="aboutBtn">About</button>-->
+        <form id="register-form">
+            <!-- Registration form can be added here if needed -->
+        </form>
+
+       
+    </div>
     <div id="content"></div>
 
     <script>
-        document.getElementById('register-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            const response = await fetch('/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, username, password }),
-            });
-            const data = await response.json();
-            alert(data.message);
-        });
-
         document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const emailOrUsername = document.getElementById('emailOrUsername').value;
-            const password = document.getElementById('login-password').value;
+    e.preventDefault();
+    const emailOrUsername = document.getElementById('emailOrUsername').value;
+    const password = document.getElementById('login-password').value;
 
-            const response = await fetch('/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ emailOrUsername, password }),
-            });
-            const data = await response.json();
+    const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ emailOrUsername, password }),
+    });
+    const data = await response.json();
 
-            if (data.token) {
-                // Store the token in local storage
-                localStorage.setItem('token', data.token);
+    if (data.token) {
+        // Store the token in local storage
+        localStorage.setItem('token', data.token);
 
-                // Hide the login form and main content
-                document.getElementById('mainContent').classList.add('hidden');
+        // Hide the login form and main content
+        document.getElementById('mainContent').classList.add('hidden');
 
-                // Show the iframe content or a new page within the content div
-                fetch('logged-in.html')
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('content').innerHTML = data;
-                        document.getElementById('content').style.display = 'block'; // Show the content
-                    });
-            } else {
-                // Display the error message if login fails
-                alert(data.message);
-            }
-        });
+        // Close the popup and overlay
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    } else {
+        // Display the error message if login fails
+        alert(data.message);
+    }
+});
+
+// Function to show the popup and overlay
+function showPopup() {
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+
+
+// Show the popup on page load
+window.onload = function() {
+    showPopup();
+};
+
     </script>
 </body>
 </html>
