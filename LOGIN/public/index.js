@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios'); // Import axios
-const Groq = require('groq-sdk');
+const Groq = require('groq-sdk/index.mjs');
 const cheerio = require('cheerio'); // Import cheerio
 
 const app = express();
