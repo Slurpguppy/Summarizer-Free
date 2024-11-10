@@ -12,8 +12,9 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8986512893450250"
      crossorigin="anonymous"></script>
      <link rel="stylesheet" href="css/sliderstyles.css"> <!-- Slider css -->
-     <link rel="stylesheet" href="css/mainstyles.css"> <!-- Main css -->
+     <link id="theme-stylesheet" rel="stylesheet" href="css/dark-styles.css"> <!-- Main css -->
      <link rel="stylesheet" href="css/copystyles.css"> <!-- Side-bar css -->
+     <link rel="stylesheet" href="css/popup-styles.css"> <!-- popup css -->
      
   <style>
 
@@ -44,6 +45,35 @@
     color: black; /* Change icon color to black on hover */
     font-size: 40px; /* Set desired icon size on hover */
     padding: 0%;
+}
+
+.locked-send-btn:hover object,
+.locked-send-btn:hover i {
+    display: none; /* Hide the original icon on hover */
+}
+
+.locked-send-btn:hover i {
+    display: inline; /* Show the icon on hover */
+}
+
+.locked-send-btn::before {
+    content: ''; /* Initially empty */
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Font Awesome 5 Free'; /* Font Awesome family */
+    font-weight: 900; /* Solid icon */
+    color: white; /* Icon color */
+    display: none; /* Hidden by default */
+    font-size: 10px; /* Default icon size */
+}
+
+.locked-send-btn:hover::before {
+    content: '\f023'; /* Unicode for the lock icon (Font Awesome) */
+    display: block; /* Show the icon on hover */
+    color: black; /* Change icon color to black on hover */
+    font-size: 30px; /* Set desired icon size on hover */
+    margin: -10px;
 }
 
 .locked-slider:hover object,
@@ -86,26 +116,62 @@
   </style>
 </head>
 <body>
-  
-</button>
-  <div class="side-bar">
+  <div id="popup">
     
-    <button class="close-button" onclick="closeSidebar()"><i class="fa-solid fa-x" style="color: #000000;"></i>
+    <!--<button id="aboutBtn">About</button>-->
+    <form id="register-form">
+       
+    </form>
+
+    
+    <form class="login-form" id="login-form">
+		<h1>Please login to continue</h1>
+		<h2>Login</h2>
+        <input class="login-input" type="text" id="emailOrUsername" placeholder="Email or Username" required>
+        <input class="login-input" type="password" id="login-password" placeholder="Password" required>
+        <button class="login-btn" id="aboutBtn" type="submit">Login</button>
+		<div class="bottom-text">Haven't subscribed? <a href="register.html">Make an account</a></div>
+    </form>
+	
+</div>
+<div id="overlay"></div>
+<div id="mainContent">
+    <!--<button id="aboutBtn">About</button>-->
+    <form id="register-form">
+    </form>
+</div>
+<div id="content"></div>
+<!--APP-->
+  <div class="side-bar">
+
+    <div class="side-bar-header">
+     
+    <div class="center-button">
+      <img src="imgs/newspaper-regular.svg" alt="Icon" width="30" height="30">
+      <span></span>
+  </div>
+  <button onclick="closeSidebar()">
+    <img src="imgs/xmark-solid.svg" alt="Close" width="30" height="30">
+</button>
+</div>
+<!--
+    <div class="side-bar-header">
+    <button class="close-button" onclick="closeSidebar()"><object type="image/svg+xml" data="imgs/xmark-solid.svg" width="30" height="30"></object>
     </button>
+    <div class="about text-dark-mode"><object class="paper-logo" type="image/svg+xml" data="imgs/newspaper-regular.svg" width="20" height="20">Summarizer</object></i><span class="paper-logo-text style="color: #252525;">Summarizer</span></div>
+  </div>
+-->
     <div class="container">
-      
       <div id="save" class="log">
-        
-        <div class="about text-dark-mode"><object class="paper-logo" type="image/svg+xml" data="imgs/newspaper-regular.svg" width="20" height="20">Summarizer</object></i><span class="paper-logo-text style="color: #252525;">Summarizer</span></div>
-        <h2 class="History">Saved articles:</h2>
-          <select id="sortOptions">
+        <h2 class="History saved-art"></h2>
+          <select class="sort-btn" id="sortOptions">
               <option value="default">Sort By</option>
               <option value="Alphabetical">Alphabetical</option>
               <option value="chronological">Recent</option>
           </select>
           <ul class="saved-text-list"></ul>
           <button class="side-bar-btns" id="clearLogsButton">Delete saved articles</button>
-          <a href="http://localhost:3000/">
+          <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0&themeRefresh=1">
             <button class="side-bar-btns">Logout</button>
         </a>
       </div>
@@ -113,9 +179,8 @@
   </div>
  <!--<div class="header header-dark" id="header">
   <div class="logo">--> 
-    <button class="open-button" onclick="togglePopup()">Open Menu</button>
-  </object>
-  <i class="fas fa-lock" style="display: none;"></i>
+    <button class="open-button" onclick="togglePopup()"> <img src="imgs/bars-solid.svg" alt="Icon" width="30" height="30">
+  
  </button>
   </div>
 </div>
@@ -127,19 +192,21 @@
 </div>
 <div class="slider-container locked-slider">
   <input type="range" min="1" max="3" value="2" class="slider" id="mySlider" step="1" oninput="updateSliderValue()">
-  <p style="margin: 10px; margin-top: 16px;">Summary length: <span id="sliderValue">Medium</span></p>
+  <p style="margin: 10px; margin-top: 16px; white-space: nowrap; color: white;">Summary length: <span id="sliderValue">Medium</span></p>
 </div>
 <div class="chat-container chat-dark-mode">
+  <div onclick="switchStyles()" class="theme-tog">
+    
+  </div>
   <div class="chat-log" id="chat-log"></div>
   <div class="input-container input-container-dark" id="input-container">
-    <input type="text" class="user-input user-input-dark" id="user-input" placeholder="Enter URL..." />
+    <input type="text" class="user-input user-input-dark" id="user-input" placeholder="Enter URL, or text..." />
     <button class="paste-btn" onclick="pasteClipboard()">Paste</button>
-    <button class="send-btn" onclick="sendMessage()">Summarize</button>
+    <button class="locked-send-btn send-btn" onclick="sendMessage()">Summarize</button>
   </div>
   <div class="footer">Created by <span style="color: #216d21;">Will Ratkowski</span>, powered by Groq AI.</div>
 </div>
   
-  <button class="theme-tog" onclick="myFunction()" width="20" height="20"></button>
   <!--lock icon-->
   <i class="fas fa-lock" style="display: none;"></i>
 
@@ -175,7 +242,7 @@
     // Add AI's response to chat log
     chatLog.innerHTML += `
   <div class="text-input message ai-message" id="textToRead">
-    <span class="ai-text">Summarized:</span> ${data.response.replace(/\n/g, '<br>')}
+    <span class="ai-text">Summarized:</span><br> ${data.response.replace(/\n/g, '<br>')}
   </div>
 `;
     chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
@@ -197,32 +264,8 @@ function repeatLastMessage() {
   if (lastMessage) {
     document.getElementById("user-input").value = lastMessage; // Set the input value to the last message
     sendMessage(); // Call sendMessage to send the last message
-  } else {
-    alert("No message to repeat.");
-  }
+  } 
 }
-
-
-// theme toggle
-function myFunction() {
-    var bodyElement = document.body;
-    var chatContainer = document.querySelector('.chat-container');
-    const about = document.querySelector(".about");
-    const header = document.getElementById("header");
-    const inputContainer = document.getElementById("input-container");
-    const userInput = document.getElementById("user-input");
-
-    // Toggle dark mode class on body
-    bodyElement.classList.toggle("dark-mode");
-    header.classList.toggle("header-dark");
-    
-    // Toggle chat dark mode class on chat container
-    chatContainer.classList.toggle("chat-dark-mode");
-    inputContainer.classList.toggle("input-container-dark");
-    userInput.classList.toggle("user-input-dark")
-
-    about.classList.toggle("text-dark-mode");
-  }
 
   function speakText() {
   const textElement = document.getElementById("textToRead");
@@ -235,12 +278,8 @@ function myFunction() {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       speechSynthesis.speak(utterance);
-    } else {
-      alert("Sorry, your browser doesn't support text-to-speech.");
-    }
-  } else {
-    alert("No text found to read aloud.");
-  }
+    } 
+  } 
 }
 // Add this function to your existing script
 function copyToClipboard() {
@@ -276,12 +315,8 @@ document.querySelector('.save-btn').addEventListener('click', function() {
       
       // Append the list item to the sidebar list
       document.querySelector('.saved-text-list').appendChild(listItem);
-    } else {
-      alert('No text available to save!');
-    }
-  } else {
-    alert('AI response not found!');
-  }
+    } 
+  } 
 });
 
 //side-bar btn
@@ -295,12 +330,77 @@ function closeSidebar() {
   const sidebar = document.querySelector('.side-bar');
   sidebar.style.display = 'none';
 }
+
+async function pasteClipboard() {
+        try {
+            // Use the Clipboard API to read the clipboard text
+            const text = await navigator.clipboard.readText();
+            // Set the input value to the pasted text
+            document.getElementById('user-input').value = text;
+        } catch (err) {
+            console.error('Failed to read clipboard contents: ', err);
+        }
+    }
+
+    function switchStyles() {
+    const themeStylesheet = document.getElementById('theme-stylesheet');
+    // Toggle between dark and light stylesheets based on current href
+    themeStylesheet.href = themeStylesheet.href.includes('dark-styles.css') ? 'css/light-styles.css' : 'css/dark-styles.css';
+
+}
+
+document.querySelector('.save-btn').addEventListener('click', function() {
+  // Get the AI response text
+  const aiResponseElement = document.querySelector('#textToRead');
+
+  if (aiResponseElement) {
+    const inputText = aiResponseElement.textContent.trim();
+
+    // Check if there's any text to save
+    if (inputText) {
+      // Save the article in local storage
+      const savedArticles = JSON.parse(localStorage.getItem('savedArticles')) || [];
+      savedArticles.push(inputText);
+      localStorage.setItem('savedArticles', JSON.stringify(savedArticles));
+
+      // Display the saved article in the list
+      displaySavedArticles();
+    }
+  }
+});
+
+function displaySavedArticles() {
+  const savedArticles = JSON.parse(localStorage.getItem('savedArticles')) || [];
+  const savedList = document.querySelector('.saved-text-list');
+  
+  // Clear the current list
+  savedList.innerHTML = '';
+  
+  // Create a list item for each saved article
+  savedArticles.forEach(article => {
+    const listItem = document.createElement('li');
+    listItem.textContent = article;
+    savedList.appendChild(listItem);
+  });
+}
+
+// Call displaySavedArticles on page load
+window.addEventListener('load', displaySavedArticles);
+
+document.getElementById('clearLogsButton').addEventListener('click', function() {
+  localStorage.removeItem('savedArticles');
+  displaySavedArticles(); // Clear the list on the page
+});
+
+
+
+
   </script>
 
 <script src="js/sliderscript.js"></script> <!-- Slider JS -->
 <script src="js/copyscript.js"></script> <!-- Copy JS -->
 <script src="js/loginScript.js"></script> <!-- Login JS -->
-<script src="Hover lock/hoverlock.js"></script> <!-- hover lock JS -->
+<script src="js/alerts.js"></script> <!-- Alerts JS -->
 
 </body>
 </html>
