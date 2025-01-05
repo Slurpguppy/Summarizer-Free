@@ -1,175 +1,345 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Summarizer</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha384-XXXXXX" crossorigin="anonymous">
-		<link rel="icon" href="../imgs/newspaper-regular.png" type="image/png">
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summarizer</title>
+  <link rel="icon" href="imgs/newspaper-regular.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8986512893450250"
+     crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="css/sliderstyles.css"> <!-- Slider css -->
+     <link id="theme-stylesheet" rel="stylesheet" href="css/dark-styles.css"> <!-- Main css -->
+     <link rel="stylesheet" href="css/copystyles.css"> <!-- Side-bar css -->
+     <link rel="stylesheet" href="css/popup-styles.css"> <!-- popup css -->
+     <style>
+       /* popup */
+      .onload {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 10000;
+      }
+      .onload-content {
+          position: relative;
+          background: #1e1e1e;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          font-size: large;
+          width: 600px;
+          height: 400px;
+          color: #e8e8e8;
+      }
+      .closeonload {
+          position: relative;
+          top: 75%;
+          text-align: center;
+          font-size: 20px;
+          font-weight: bold;
+          cursor: pointer;
+          color: #e8e8e8;
+          background: #007BFF;
+          padding: 20px;
+          border-radius: 10px;
+      }
+      
+      .closeonload:hover {
+          background: #007bff6c;
+      }
+          </style>
+</head>
+<body>
+  <div class="onload" id="onload">
+    <div class="onload-content">
+        <span id="closeonload" class="closeonload">Start</span>
+        <h2>👋 Welcome!</h2>
+        <p>This is a AI article summarizer that will summarize articles and websites.</p>
+        <p>Just enter in the link!</p>
+    </br>
+    <p>This app was built by <a style="color: #216d21; text-decoration: none;" href="https://portfolio-9pcm.onrender.com/">Will Ratkowski</a>, using Node JS.</p>
+    </div>
+  </div>
+<div id="overlay"></div>
+<div id="mainContent">
+    <!--<button id="aboutBtn">About</button>-->
+    <form id="register-form">
+    </form>
+</div>
+<div id="content"></div>
+<!--APP-->
+  <div class="side-bar">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+    <div class="side-bar-header">
+     
+    <div class="center-button">
+      <img src="imgs/newspaper-regular.svg" alt="Icon" width="30" height="30">
+      <span></span>
+  </div>
+  <button onclick="closeSidebar()">
+    <img src="imgs/xmark-solid.svg" alt="Close" width="30" height="30">
+</button>
+</div>
+<!--
+    <div class="side-bar-header">
+    <button class="close-button" onclick="closeSidebar()"><object type="image/svg+xml" data="imgs/xmark-solid.svg" width="30" height="30"></object>
+    </button>
+    <div class="about text-dark-mode"><object class="paper-logo" type="image/svg+xml" data="imgs/newspaper-regular.svg" width="20" height="20">Summarizer</object></i><span class="paper-logo-text style="color: #252525;">Summarizer</span></div>
+  </div>
+-->
+    <div class="container">
+      <div id="save" class="log">
+        <h2 class="History saved-art"></h2>
+          <select class="sort-btn" id="sortOptions">
+              <option value="default">Sort By</option>
+              <option value="Alphabetical">Alphabetical</option>
+              <option value="chronological">Recent</option>
+          </select>
+          <ul class="saved-text-list"></ul>
+          <button class="side-bar-btns" id="clearLogsButton">Delete saved articles</button>
+          
+      </div>
+  </div>
+  </div>
+ <!--<div class="header header-dark" id="header">
+  <div class="logo">--> 
+    <button class="open-button" onclick="togglePopup()"> <img src="imgs/bars-solid.svg" alt="Icon" width="30" height="30">
+  
+ </button>
+  </div>
+</div>
+<div class="options-bar">
+  <button id="Save-alert" class="option-btn save-btn"><object type="image/svg+xml" data="imgs\download-solid.svg" width="20" height="20"></object><br>Save</button>
+  <button id="Speak-alert" class="option-btn" onclick="speakText()"><object type="image/svg+xml" data="imgs/play-solid.svg" width="20" height="20"></object><br>Speak</button>
+  <button id="Copy-alert" class="option-btn" onclick="copyToClipboard()"><object type="image/svg+xml" data="imgs/copy-solid.svg" width="20" height="20"></object><br>Copy</button>
+  <button id="Redo-alert" class="option-btn" onclick="repeatLastMessage()"><object type="image/svg+xml" data="imgs/repeat-solid.svg" width="20" height="20"></object><br>Rewrite</button>
+</div>
+<div class="slider-container">
+  <input type="range" min="1" max="3" value="2" class="slider" id="mySlider" step="1" oninput="updateSliderValue()">
+  <p style="margin: 10px; margin-top: 16px; white-space: nowrap; color: white;">Summary length: <span id="sliderValue">Medium</span></p>
+</div>
+<div class="chat-container chat-dark-mode">
+  <div onclick="switchStyles()" class="theme-tog">
+    
+  </div>
+  <div class="chat-log" id="chat-log"></div>
+  <div class="input-container input-container-dark" id="input-container">
+    <input type="text" class="user-input user-input-dark" id="user-input" placeholder="Enter URL, or text..." />
+    <button class="paste-btn" onclick="pasteClipboard()">Paste</button>
+    <button class="send-btn" onclick="sendMessage()">Summarize</button>
+  </div>
+  <div class="footer">Created by <a style="color: #216d21; text-decoration: none;" href="https://portfolio-9pcm.onrender.com/">Will Ratkowski</a>, powered by Groq AI.</div>
+</div>
+  
+  <script>
+    let lastMessage = ""; // Variable to store the last message sent by the user
+    let sliderValue = 2; // Initialize the slider value
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<span class="logo"><img src="images/paper-white.svg" alt="" /></span>
-						<h1>Summarizer</h1>
-						<div class="Welcome"></i>AI-powered article <span style="color: #007BFF;">Summarizer</span></div>
-						built by <a href="https://github.com/Slurpguppy">Will Ratkowski</a>.</p>
-					</header>
+    async function sendMessage() {
+  const input = document.getElementById("user-input");
+  const message = input.value;
+  if (!message) return;
 
-				<!-- Nav -->
-					<nav id="nav">
-						<ul>
-							<li><a href="#intro" class="active">Start now</a></li>
-							<li><a href="#first">About</a></li>
-							<li><a href="#second">Make an account</a></li>
-							<li><a href="#cta">Login</a></li>
-						</ul>
-					</nav>
+  const chatLog = document.getElementById("chat-log");
+  chatLog.innerHTML = '';
 
-				<!-- Main -->
-					<div id="main">
+  // Add user's message to chat log
+  chatLog.innerHTML += `<div class="message user-message"><span class="link-text">Your link</span>: ${message}</div>`;
+  lastMessage = message; // Store the last message
+  input.value = "";
+  chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
 
-						<!-- Introduction -->
-							<section id="intro" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>Summarize articles instantly</h2>
-										</header>
-										<p>Summarizer is a web application that instantly generates concise summaries of articles or webpages. Users can input a URL, and the AI engine will quickly distill the content into an easy-to-read overview. Designed for efficiency, it helps users catch up on news, research, or gather quick insights. The service offers unlimited access to features like saving, customizing, and copying summaries for a monthly subscription of $9.99. Users can create an account to unlock additional functionalities and enjoy seamless summarization.</p>
-										<ul class="actions">
-											<li><a href="freeApp.html" class="button">Try it out</a></li>
-										</ul>
-									</div>
-									<span class="image"><img src="images/newspaper-solid.svg" alt="" /></span>
-								</div>
-							</section>
+  // Send message to backend
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }),
+    });
+    const data = await response.json();
 
-						<!-- First Section -->
-							<section id="first" class="main special">
-								<header class="major">
-									<h2>Save time by condensing long articles into concise summaries</h2>
-								</header>
-								<ul class="features">
-									<li>
-										<span class="icon solid major style1 fa-copy"></span>
-										<h3>Copy the article link.</h3>
-										<p>Copy the link to the article you want summarized.</p>
-									</li>
-									<li>
-										<span class="icon solid major style3 fa-mouse-pointer"></span>
-										<h3>Click "Summarize."</h3>
-										<p> Click "Summarize" and let the AI quickly generate a summary for you.</p>
-									</li>
-									<li>
-										<span class="icon major style5 fa-newspaper"></span>
-										<h3> Read your summary!</h3>
-										<p>Enjoy reading your easy-to-digest article summary!</p>
-									</li>
-								</ul>
-								<footer class="major">
-									<ul class="actions special">
-										<li><a href="freeApp.html" class="button">Try it out</a></li>
-									</ul>
-								</footer>
-							</section>
+    // Add AI's response to chat log
+    chatLog.innerHTML += `
+  <div class="text-input message ai-message" id="textToRead">
+    <span class="ai-text">Summarized:</span><br> ${data.response.replace(/\n/g, '<br>')}
+  </div>
+`;
+    chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
 
-						<!-- Second Section -->
-							<section id="second" class="main special">
-								<header class="major">
-									<h2>Get unlmited accses to  all features</h2>
-									<p>Unlock all features, only $9.99 a month.</p>
-								</header>
-								<ul class="statistics">
-									<li class="style1">
-										<img src="images/sliders-solid.svg" alt="Description of image" class="icon" style="height: 45px;" />
-										<strong>Customize</strong>Unlmited
-									</li>
-									<li class="style2">
-										<span class="icon solid fa-download"></span>
-										<strong>Save</strong>Unlmited
-									</li>
-									<li class="style3">
-										<span class="icon solid fa-play"></span>
-										<strong>Read</strong>Unlmited
-									</li>
-									<li class="style4">
-										<span class="icon solid fa-copy"></span>
-										<strong>Copy</strong> Unlmited
-									</li>
-									<li class="style5">
-										<img src="images/repeat-solid.svg" alt="Description of image" class="icon" style="height: 45px;" />
-										<strong>Redo</strong>Unlmited
-									</li>
-									
-								</ul>
-								<p class="content">Get full access to a range of helpful features designed to save you time. Easily save and organize articles you want to keep, listen to summaries read aloud, and choose the length of each summary based on your needs. Plus, use extra tools to customize and manage your content, making it simpler to stay informed and quickly get to the information that matters most to you. With these features, you’ll have everything you need to keep up with important content in a way that fits your schedule.</p>
-								<footer class="major">
-									<ul class="actions special">
-										<li><a href="payment.html" class="button">Make an account</a></li>
-									</ul>
-								</footer>
-							</section>
+    
 
-						<!-- Get Started -->
-							<section id="cta" class="main special">
-								<header class="major">
-									<h2>Jump in!</h2>
-									<p>Please login, or make an account if you don't have one!</p>
-								</header>
-								<footer class="major">
-									<ul class="actions special">
-										<li><a href="paidApp.html" class="button primary">Login</a></li>
-										<li><a href="payment.html" class="button">Make an account</a></li>
-									</ul>
-								</footer>
-							</section>
+    // Show the copy button
+    document.getElementById("ai-response-container").style.display = "block"; // Display the copy button
+  } catch (error) {
+    console.error("Error:", error);
+    chatLog.innerHTML += `<div class="message ai-message"></div>`;
+    chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
+    document.getElementById("ai-response-container").style.display = "none"; // Hide the copy button
+  }
+}
 
-					</div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<h2>Thanks for visiting!</h2>
-							<p>Check out my GitHub</p>
-							<ul class="actions">
-								<li><a href="" class="button">Learn More</a></li>
-							</ul>
-						</section>
-						<section>
-							<h2>Contact</h2>
-							<dl class="alt">
-								<dt>Email</dt>
-								
-								<dt>Wlratkowski@gmail.com</dt>
-							</dl>
-							<ul class="icons">
-								<li><a href="#" class="icon brands fa-twitter alt"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f alt"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram alt"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-github alt"><span class="label">GitHub</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble alt"><span class="label">Dribbble</span></a></li>
-							</ul>
-						</section>
-						<p class="copyright">&copy; 2024. Design: <a href="https://github.com/Slurpguppy">Will Ratkowski</a>.</p>
-					</footer>
+function repeatLastMessage() {
+  if (lastMessage) {
+    document.getElementById("user-input").value = lastMessage; // Set the input value to the last message
+    sendMessage(); // Call sendMessage to send the last message
+  } 
+}
 
-			</div>
+  function speakText() {
+  const textElement = document.getElementById("textToRead");
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+  // Make sure the element exists and has content
+  if (textElement) {
+    const text = textElement.textContent; // Use textContent to get the text inside the div
+    
+    // Check if the browser supports SpeechSynthesis
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    } 
+  } 
+}
+// Add this function to your existing script
+function copyToClipboard() {
+  const aiResponse = document.querySelector("#textToRead");
 
-	</body>
+  // Make sure the AI response element exists
+  if (aiResponse) {
+    const responseText = aiResponse.textContent;
+
+    // Use the clipboard API to copy the text
+    navigator.clipboard.writeText(responseText).then(() => {
+      
+    }).catch(err => {
+      console.error("Could not copy text: ", err);
+    });
+  } else {
+    
+  }
+}
+
+document.querySelector('.save-btn').addEventListener('click', function() {
+  // Get the AI response text
+  const aiResponseElement = document.querySelector('#textToRead');
+  
+  if (aiResponseElement) {
+    const inputText = aiResponseElement.textContent.trim();
+    
+    // Check if there's any text to save
+    if (inputText) {
+      // Create a new list item
+      const listItem = document.createElement('li');
+      listItem.textContent = inputText;
+      
+      // Append the list item to the sidebar list
+      document.querySelector('.saved-text-list').appendChild(listItem);
+    } 
+  } 
+});
+
+//side-bar btn
+
+function togglePopup() {
+  const container = document.querySelector('.side-bar');
+  container.style.display = container.style.display === 'block' ? 'none' : 'block';
+}
+
+function closeSidebar() {
+  const sidebar = document.querySelector('.side-bar');
+  sidebar.style.display = 'none';
+}
+
+async function pasteClipboard() {
+        try {
+            // Use the Clipboard API to read the clipboard text
+            const text = await navigator.clipboard.readText();
+            // Set the input value to the pasted text
+            document.getElementById('user-input').value = text;
+        } catch (err) {
+            console.error('Failed to read clipboard contents: ', err);
+        }
+    }
+
+    function switchStyles() {
+    const themeStylesheet = document.getElementById('theme-stylesheet');
+    // Toggle between dark and light stylesheets based on current href
+    themeStylesheet.href = themeStylesheet.href.includes('dark-styles.css') ? 'css/light-styles.css' : 'css/dark-styles.css';
+
+}
+
+document.querySelector('.save-btn').addEventListener('click', function() {
+  // Get the AI response text
+  const aiResponseElement = document.querySelector('#textToRead');
+
+  if (aiResponseElement) {
+    const inputText = aiResponseElement.textContent.trim();
+
+    // Check if there's any text to save
+    if (inputText) {
+      // Save the article in local storage
+      const savedArticles = JSON.parse(localStorage.getItem('savedArticles')) || [];
+      savedArticles.push(inputText);
+      localStorage.setItem('savedArticles', JSON.stringify(savedArticles));
+
+      // Display the saved article in the list
+      displaySavedArticles();
+    }
+  }
+});
+
+function displaySavedArticles() {
+  const savedArticles = JSON.parse(localStorage.getItem('savedArticles')) || [];
+  const savedList = document.querySelector('.saved-text-list');
+  
+  // Clear the current list
+  savedList.innerHTML = '';
+  
+  // Create a list item for each saved article
+  savedArticles.forEach(article => {
+    const listItem = document.createElement('li');
+    listItem.textContent = article;
+    savedList.appendChild(listItem);
+  });
+}
+
+// Call displaySavedArticles on page load
+window.addEventListener('load', displaySavedArticles);
+
+document.getElementById('clearLogsButton').addEventListener('click', function() {
+  localStorage.removeItem('savedArticles');
+  displaySavedArticles(); // Clear the list on the page
+});
+
+// popup
+document.addEventListener("DOMContentLoaded", function() {
+    const onload = document.getElementById("onload");
+    const closeonload = document.getElementById("closeonload");
+    onload.style.display = "flex";
+    closeonload.addEventListener("click", function() {
+        onload.style.display = "none";
+    });
+});
+
+
+  </script>
+
+<script src="js/sliderscript.js"></script> <!-- Slider JS -->
+<script src="js/copyscript.js"></script> <!-- Copy JS -->
+<script src="js/loginScript.js"></script> <!-- Login JS -->
+<script src="js/alerts.js"></script> <!-- Alerts JS -->
+<script src="js/popup-script.js"></script> <!-- popup JS -->
+
+</body>
 </html>
